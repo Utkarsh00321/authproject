@@ -12,14 +12,18 @@ export const sendEmail = async ({ email, emailType, userId }) => {
     if (emailType === "VERIFY") {
       // Update user's verify token and expiry for email verification
       await User.findByIdAndUpdate(userId, {
-        verifyToken: hashedToken,
-        verifyTokenExpiry: Date.now() + 3600000, // Token expiry time: 1 hour
+        $set: {
+          verifyToken: hashedToken,
+          verifyTokenExpiry: Date.now() + 3600000, // Token expiry time: 1 hour
+        },
       });
     } else if (emailType === "RESET") {
       // Update user's forgot password token and expiry for password reset
       await User.findByIdAndUpdateAndUpdate(userId, {
-        forgotPasswordToken: hashedToken,
-        forgotPasswordTokenExpiry: Date.now() + 360000, // Token expiry time: 10 minutes
+        $set: {
+          forgotPasswordToken: hashedToken,
+          forgotPasswordTokenExpiry: Date.now() + 360000, // Token expiry time: 10 minutes
+        },
       });
     }
 
