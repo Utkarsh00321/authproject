@@ -11,8 +11,10 @@ await connectToDB();
 // Handler function for POST requests
 export const POST = async (req) => {
   try {
-    // Extract username, email, and password from the request body
-    const { username, email, password } = await req.json();
+    const reqBody = await req.json();
+    const { username, email, password } = reqBody;
+
+    console.log(reqBody);
 
     // Check if a user with the provided email already exists
     const user = await User.findOne({ email });
